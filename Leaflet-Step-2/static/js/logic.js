@@ -45,9 +45,6 @@ d3.json(plateLink, function(plateData) {
                 pointToLayer: createCircleMarker
             })
         createMap(plates, earthQuakes)
-        
-        console.log(plates)
-        console.log(earthQuakes)
 
         });
 })
