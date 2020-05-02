@@ -18,21 +18,21 @@ function markerSize(mag) {
     return mag * 8000
 }
 
-function markerColor(mag) {
+function chooseColor(mag) {
     switch(true){
-        case(mag > 5):
+        case(mag >= 5):
             return "red"
-        case(mag > 4):
+        case(mag >= 4 && mag < 5):
             return "lightsalmon"
-        case(mag > 3):
+        case(mag >= 3 && mag < 4):
             return "orange"
-        case(mag > 2):
+        case(mag >= 2 && mag < 3):
             return "gold"
-        case(mag >1):
+        case(mag >= 1 && mag < 2):
             return "limegreen"
-        case(mag > 0):
-            return "green"
-    }
+        case(mag >= 0 && mag < 1):
+            return "lightgreen"
+    };
 }
 
 d3.json(link, function(data) {
@@ -44,7 +44,7 @@ d3.json(link, function(data) {
         L.circle([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {
             radius: markerSize(feature.properties.mag),
             color: "black",
-            fillColor: markerColor(feature.properties.mag),
+            fillColor: chooseColor(feature.properties.mag),
             fillOpacity: 0.9,
             stroke: true,
             weight: 0.25
@@ -66,7 +66,7 @@ d3.json(link, function(data) {
         // loop through our density intervals and generate a label with a colored square for each interval
         for (var i = 0; i < grades.length; i++) {
             div.innerHTML +=
-                '<i style="background:' + markerColor(grades[i] + 1) + '"></i> ' + 
+                '<i style="background:' + chooseColor(grades[i] + 1) + '"></i> ' + 
                 grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
         }
         return div;
